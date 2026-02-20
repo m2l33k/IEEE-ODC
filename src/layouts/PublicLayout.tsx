@@ -58,13 +58,6 @@ export function PublicLayout() {
               <button
                 type="button"
                 className="public-nav-link"
-                onClick={() => scrollToSection('overview')}
-              >
-                Partnership Overview
-              </button>
-              <button
-                type="button"
-                className="public-nav-link"
                 onClick={() => scrollToSection('kpis')}
               >
                 KPIs & Impact

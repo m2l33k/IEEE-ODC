@@ -1,4 +1,3 @@
-import { PartnershipOverviewSection } from '../sections/PartnershipOverviewSection'
 import { HeroSection } from '../sections/HeroSection'
 import { KpiSection } from '../sections/KpiSection'
 import { GallerySection } from '../sections/GallerySection'
@@ -48,7 +47,6 @@ export function LandingPage() {
   return (
     <>
       <HeroSection />
-      <PartnershipOverviewSection />
       <KpiSection />
       <GallerySection />
       <SupportProcessSection />
