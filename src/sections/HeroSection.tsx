@@ -57,17 +57,6 @@ export function HeroSection() {
           </div>
         </div>
       </div>
-      <div className="logo-spin-strip">
-        <div className="logo-spin-pill">
-          <div className="logo-spin-circle">
-            <img src="/OIP-1215431747.jpg" alt="IEEE" />
-          </div>
-          <div className="logo-spin-x">×</div>
-          <div className="logo-spin-circle">
-            <img src="/ODC-RGB-black-Orange-4057230769.png" alt="ODC" />
-          </div>
-        </div>
-      </div>
     </section>
   )
 }

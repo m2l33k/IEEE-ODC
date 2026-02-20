@@ -413,58 +413,6 @@ button {
   color: var(--color-text-muted);
 }
 
-.logo-spin-strip {
-  display: flex;
-  justify-content: center;
-  margin-top: var(--space-xl);
-}
-
-.logo-spin-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-sm);
-  padding: 8px 16px;
-  border-radius: 999px;
-  background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), rgba(5, 6, 24, 0.96));
-  border: 1px solid rgba(148, 163, 184, 0.5);
-  box-shadow: var(--shadow-sm);
-  animation: logo-spin 16s linear infinite;
-}
-
-.logo-spin-circle {
-  width: 32px;
-  height: 32px;
-  border-radius: 999px;
-  overflow: hidden;
-  background-color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.logo-spin-circle img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.logo-spin-x {
-  color: var(--color-text-muted);
-  font-size: 18px;
-}
-
-@keyframes logo-spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  50% {
-    transform: rotate(180deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
 .section-about {
   background-color: transparent;
   color: var(--color-text);
@@ -486,6 +434,68 @@ button {
 :root[data-theme='dark'] .overview-card {
   background: linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.9));
   color: var(--color-text);
+}
+
+.logo-strip-section {
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-xl);
+  background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), #050618);
+}
+
+:root[data-theme='light'] .logo-strip-section {
+  background: linear-gradient(135deg, #f9fafb, #e5e7eb);
+}
+
+.logo-strip-inner {
+  width: 100%;
+}
+
+.logo-strip-header {
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-md);
+}
+
+:root[data-theme='light'] .logo-strip-header {
+  color: #6b7280;
+}
+
+.logo-strip-viewport {
+  overflow: hidden;
+}
+
+.logo-strip-track {
+  display: flex;
+  gap: var(--space-xl);
+  animation: logo-marquee 24s linear infinite;
+}
+
+.logo-strip-item {
+  flex: 0 0 auto;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background-color: #ffffff;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-strip-item img {
+  max-height: 32px;
+  width: auto;
+  object-fit: contain;
+}
+
+@keyframes logo-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 .section-activities {
