@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+const images = import.meta.glob('/src/assets/logo/*.{jpg,png,jpeg}', {
+  eager: true,
+}) as Record<string, { default: string }>;
 
-const heroImages = ['/lgoog/hero-1.jpg', '/lgoog/hero-2.jpg', '/lgoog/hero-3.jpg']
+const heroImages = Object.values(images).map((module) => module.default);
+
 
 export function HeroSection() {
   const [activeIndex, setActiveIndex] = useState(0)
@@ -50,6 +54,17 @@ export function HeroSection() {
                 Rotating view of partnership activities, communities, and opportunities.
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div className="logo-spin-strip">
+        <div className="logo-spin-pill">
+          <div className="logo-spin-circle">
+            <img src="/OIP-1215431747.jpg" alt="IEEE" />
+          </div>
+          <div className="logo-spin-x">×</div>
+          <div className="logo-spin-circle">
+            <img src="/ODC-RGB-black-Orange-4057230769.png" alt="ODC" />
           </div>
         </div>
       </div>

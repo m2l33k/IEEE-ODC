@@ -1,7 +1,8 @@
 export function PartnershipOverviewSection() {
   return (
-    <section id="overview" className="layout-section section-contained section-about">
-      <header className="section-header">
+    <section id="overview" className="layout-section section-about">
+      <div className="section-contained overview-card">
+        <header className="section-header">
         <h2>Partnership Overview</h2>
         <p>
           Strategic collaboration between IEEE and ODC focused on enabling high-impact initiatives,
@@ -30,6 +31,7 @@ export function PartnershipOverviewSection() {
             claim processes.
           </p>
         </div>
+      </div>
       </div>
     </section>
   )

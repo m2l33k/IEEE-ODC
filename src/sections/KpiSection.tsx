@@ -6,9 +6,9 @@ type Kpi = {
 }
 
 const kpis: Kpi[] = [
-  { id: 'events', label: 'Supported events', value: 0, suffix: '+' },
-  { id: 'participants', label: 'Participants reached', value: 0, suffix: '+' },
-  { id: 'countries', label: 'Countries represented', value: 0 },
+  { id: 'events', label: 'Supported events', value: 70, suffix: '+' },
+  { id: 'participants', label: 'Participants reached', value: 3000, suffix: '+' },
+  { id: 'branches', label: 'Student Branch', value: 51, suffix: '+' },
   { id: 'years', label: 'Years of collaboration', value: 3 }
 ]
 

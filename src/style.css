@@ -246,7 +246,25 @@ button {
 
 .public-nav-link {
   font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: none;
+  background-color: transparent;
   color: var(--color-text-muted);
+  cursor: pointer;
+  transition: background-color 120ms ease-out, color 120ms ease-out, box-shadow 120ms ease-out;
+}
+
+.public-nav-link:hover {
+  background-color: rgba(15, 23, 42, 0.8);
+  color: var(--color-text);
+  box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.5);
+}
+
+:root[data-theme='light'] .public-nav-link:hover {
+  background-color: rgba(15, 23, 42, 0.06);
+  color: #111827;
+  box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.7);
 }
 
 .public-header-actions {
@@ -278,9 +296,9 @@ button {
 .hero-section {
   position: relative;
   background:
-    linear-gradient(140deg, rgba(5, 6, 24, 0.96), rgba(11, 31, 59, 0.92)),
-    radial-gradient(circle at 0% 0%, rgba(18, 60, 115, 0.75), transparent 55%),
-    radial-gradient(circle at 100% 0%, rgba(255, 121, 0, 0.45), transparent 55%);
+    radial-gradient(circle at 0% 0%, rgba(18, 60, 115, 0.85), transparent 55%),
+    radial-gradient(circle at 100% 100%, rgba(255, 121, 0, 0.55), transparent 60%),
+    linear-gradient(145deg, #050618 0%, #0b1f3b 40%, #050618 100%);
   overflow: hidden;
 }
 
@@ -395,14 +413,79 @@ button {
   color: var(--color-text-muted);
 }
 
+.logo-spin-strip {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-xl);
+}
+
+.logo-spin-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), rgba(5, 6, 24, 0.96));
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  box-shadow: var(--shadow-sm);
+  animation: logo-spin 16s linear infinite;
+}
+
+.logo-spin-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  overflow: hidden;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-spin-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.logo-spin-x {
+  color: var(--color-text-muted);
+  font-size: 18px;
+}
+
+@keyframes logo-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .section-about {
-  background-color: #f4f6f9;
-  color: #0b1f3b;
+  background-color: transparent;
+  color: var(--color-text);
 }
 
 .section-about .section-header p,
 .section-about .section-column p {
-  color: #4b5563;
+  color: var(--color-text-muted);
+}
+
+.overview-card {
+  border-radius: var(--radius-lg);
+  padding: var(--space-2xl) var(--space-xl);
+  background: linear-gradient(135deg, #ffffff, #f4f6f9);
+  color: #0b1120;
+  box-shadow: var(--shadow-md);
+}
+
+:root[data-theme='dark'] .overview-card {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.9));
+  color: var(--color-text);
 }
 
 .section-activities {
@@ -415,6 +498,10 @@ button {
 
 .section-stats {
   background: linear-gradient(135deg, #050618 0%, #0e3a6d 40%, #123c73 80%);
+}
+
+:root[data-theme='light'] .section-stats {
+  background: radial-gradient(circle at top, #ffffff 0%, #f5f5f7 45%, #e5e7eb 100%);
 }
 
 .section-columns {
@@ -449,6 +536,11 @@ button {
   box-shadow: var(--shadow-sm);
   backdrop-filter: blur(18px);
   transition: transform 140ms ease-out, box-shadow 140ms ease-out, border-color 140ms ease-out;
+}
+
+:root[data-theme='light'] .kpi-card {
+  background: linear-gradient(145deg, #ffffff, #f5f5f7);
+  border-color: rgba(148, 163, 184, 0.4);
 }
 
 .kpi-label {
@@ -553,8 +645,9 @@ button {
 .faq-item {
   border-radius: var(--radius-md);
   border: 1px solid var(--color-border);
-  background-color: var(--color-surface);
+  background: linear-gradient(135deg, var(--color-surface-soft), var(--color-surface));
   padding: var(--space-md);
+  box-shadow: var(--shadow-sm);
 }
 
 .faq-item + .faq-item {
@@ -582,7 +675,7 @@ button {
 .team-card {
   border-radius: var(--radius-md);
   border: 1px solid rgba(148, 163, 184, 0.35);
-  background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.86));
+  background: linear-gradient(145deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.88));
   color: var(--color-text);
   padding: var(--space-lg);
   display: flex;
@@ -590,6 +683,16 @@ button {
   align-items: center;
   box-shadow: var(--shadow-sm);
   backdrop-filter: blur(16px);
+}
+
+:root[data-theme='light'] .team-card {
+  background: linear-gradient(145deg, #ffffff, #f5f5f7);
+  color: #0b1120;
+}
+
+:root[data-theme='light'] .team-role,
+:root[data-theme='light'] .team-group {
+  color: #4b5563;
 }
 
 .team-avatar {
@@ -623,6 +726,11 @@ button {
 .section-teams {
   background: radial-gradient(circle at top left, rgba(108, 43, 217, 0.14), transparent 55%),
     #050618;
+}
+
+:root[data-theme='light'] .section-teams {
+  background: radial-gradient(circle at top left, rgba(108, 43, 217, 0.08), transparent 55%),
+    #f5f5f7;
 }
 
 .form {
