@@ -11,14 +11,14 @@ const teamMembers: TeamMember[] = [
     id: 'member-1',
     name: 'IEEE Representative',
     role: 'Steering Committee',
-    group: 'Governance',
+    group: 'Governance · IEEE is an international organisation',
     organization: 'ieee'
   },
   {
     id: 'member-2',
-    name: 'ODC Representative',
-    role: 'Partnership Lead',
-    group: 'Governance',
+    name: 'ODC',
+    role: 'ODC Representative',
+    group: 'Partnership Lead · Orange is a sponsor',
     organization: 'odc'
   }
 ]
