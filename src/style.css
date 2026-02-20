@@ -107,6 +107,11 @@ button {
     #050618;
 }
 
+:root[data-theme='light'] .section-alt {
+  background: radial-gradient(circle at top left, rgba(108, 43, 217, 0.06), transparent 55%),
+    #f5f5f7;
+}
+
 .section-header {
   max-width: 720px;
   margin: 0 auto var(--space-xl);
@@ -660,6 +665,12 @@ button {
     linear-gradient(145deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.86));
   box-shadow: var(--shadow-sm);
   transition: transform 140ms ease-out, box-shadow 140ms ease-out, border-color 140ms ease-out;
+}
+
+:root[data-theme='light'] .support-step-card {
+  border-color: rgba(148, 163, 184, 0.4);
+  background: #ffffff;
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
 }
 
 .support-step-number {
