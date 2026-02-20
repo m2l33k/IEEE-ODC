@@ -24,7 +24,7 @@ const galleryItems: GalleryItem[] = [
 
 export function GallerySection() {
   return (
-    <section id="gallery" className="layout-section section-contained section-events">
+    <section id="gallery" className="layout-section section-events">
       <header className="section-header">
         <h2>Events and Gallery</h2>
         <p>Visual overview of initiatives and activities supported by the partnership.</p>
