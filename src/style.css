@@ -534,6 +534,10 @@ button {
   background: linear-gradient(135deg, #ff7900 0%, #ffa533 40%, #ff7900 80%);
 }
 
+:root[data-theme='light'] .section-events {
+  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 40%, #fed7aa 80%);
+}
+
 .section-stats {
   background: linear-gradient(135deg, #050618 0%, #0e3a6d 40%, #123c73 80%);
 }
@@ -612,6 +616,12 @@ button {
   overflow: hidden;
   backdrop-filter: blur(18px);
   transition: transform 140ms ease-out, box-shadow 140ms ease-out, border-color 140ms ease-out;
+}
+
+:root[data-theme='light'] .gallery-card {
+  border-color: rgba(148, 163, 184, 0.35);
+  background: #ffffff;
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
 }
 
 .gallery-image-placeholder {
