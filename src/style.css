@@ -469,7 +469,9 @@ button {
 .logo-strip-track {
   display: flex;
   gap: var(--space-xl);
-  animation: logo-marquee 24s linear infinite;
+  animation-name: logo-marquee;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
 
 .logo-strip-item {
