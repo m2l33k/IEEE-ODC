@@ -34,80 +34,82 @@ export function PublicLayout() {
     <div className="layout-root">
       <header className="public-header">
         <div className="public-header-inner">
-          <Link to="/" className="public-logo">
-            <div className="public-logo-mark">
-              <img
-                src="/OIP-1215431747.jpg"
-                alt="IEEE"
-                className="public-logo-image"
-              />
-              <span className="public-logo-separator">×</span>
-              <img
-                src="/ODC-RGB-black-Orange-4057230769.png"
-                alt="ODC"
-                className="public-logo-image"
-              />
-            </div>
-            <div className="public-logo-text">
-              <span className="public-logo-label">Strategic partnership</span>
-              <span className="public-logo-sub">IEEE / ODC</span>
-            </div>
-          </Link>
-          <nav className="public-nav">
-            <button
-              type="button"
-              className="public-nav-link"
-              onClick={() => scrollToSection('overview')}
-            >
-              Partnership Overview
-            </button>
-            <button
-              type="button"
-              className="public-nav-link"
-              onClick={() => scrollToSection('kpis')}
-            >
-              KPIs & Impact
-            </button>
-            <button
-              type="button"
-              className="public-nav-link"
-              onClick={() => scrollToSection('gallery')}
-            >
-              Events & Gallery
-            </button>
-            <button
-              type="button"
-              className="public-nav-link"
-              onClick={() => scrollToSection('support')}
-            >
-              Support & Vouchers
-            </button>
-            <button
-              type="button"
-              className="public-nav-link"
-              onClick={() => scrollToSection('faq')}
-            >
-              FAQ
-            </button>
-            <button
-              type="button"
-              className="public-nav-link"
-              onClick={() => scrollToSection('teams')}
-            >
-              Teams
-            </button>
-          </nav>
-          <div className="public-header-actions">
-            <button
-              type="button"
-              className="btn btn-ghost theme-toggle"
-              onClick={toggleTheme}
-            >
-              {theme === 'dark' ? 'Light mode ☀️' : 'Dark mode 🌙'}
-            </button>
-            <Link to="/vouchers/claim" className="btn btn-primary">
-              Claim Voucher
+          <div className="public-nav-shell">
+            <Link to="/" className="public-logo">
+              <div className="public-logo-mark">
+                <img
+                  src="/OIP-1215431747.jpg"
+                  alt="IEEE"
+                  className="public-logo-image"
+                />
+                <span className="public-logo-separator">×</span>
+                <img
+                  src="/ODC-RGB-black-Orange-4057230769.png"
+                  alt="ODC"
+                  className="public-logo-image"
+                />
+              </div>
+              <div className="public-logo-text">
+                <span className="public-logo-label">Strategic partnership</span>
+                <span className="public-logo-sub">IEEE / ODC</span>
+              </div>
             </Link>
+            <nav className="public-nav">
+              <button
+                type="button"
+                className="public-nav-link"
+                onClick={() => scrollToSection('overview')}
+              >
+                Partnership Overview
+              </button>
+              <button
+                type="button"
+                className="public-nav-link"
+                onClick={() => scrollToSection('kpis')}
+              >
+                KPIs & Impact
+              </button>
+              <button
+                type="button"
+                className="public-nav-link"
+                onClick={() => scrollToSection('gallery')}
+              >
+                Events & Gallery
+              </button>
+              <button
+                type="button"
+                className="public-nav-link"
+                onClick={() => scrollToSection('support')}
+              >
+                Support & Vouchers
+              </button>
+              <button
+                type="button"
+                className="public-nav-link"
+                onClick={() => scrollToSection('faq')}
+              >
+                FAQ
+              </button>
+              <button
+                type="button"
+                className="public-nav-link"
+                onClick={() => scrollToSection('teams')}
+              >
+                Teams
+              </button>
+            </nav>
+            <div className="public-header-actions">
+              <button
+                type="button"
+                className="btn btn-ghost theme-toggle"
+                onClick={toggleTheme}
+              >
+                {theme === 'dark' ? 'Light mode ☀️' : 'Dark mode 🌙'}
+              </button>
+              <Link to="/vouchers/claim" className="btn btn-primary">
+                Claim Voucher
+              </Link>
+            </div>
           </div>
         </div>
       </header>
