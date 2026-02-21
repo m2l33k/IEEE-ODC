@@ -326,13 +326,8 @@ button {
 
 .hero-section {
   position: relative;
-  background:
-    radial-gradient(circle at 0% 0%, rgba(18, 60, 115, 0.85), transparent 55%),
-    radial-gradient(circle at 100% 100%, rgba(255, 121, 0, 0.55), transparent 60%),
-    linear-gradient(145deg, #050618 0%, #0b1f3b 40%, #050618 100%);
   overflow: hidden;
 }
-
 .hero-inner {
   max-width: 1200px;
   margin: 0 auto;

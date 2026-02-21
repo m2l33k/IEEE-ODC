@@ -1,16 +1,25 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
-const images = import.meta.glob('/src/assets/logo/*.{jpg,png,jpeg}', {
-  eager: true,
-}) as Record<string, { default: string }>;
+import wallpaperFallback from '../assets/wallpaper/229A3013.jpg'
 
-const heroImages = Object.values(images).map((module) => module.default);
+const wallpaperModules = import.meta.glob('/src/assets/wallpaper/*.{jpg,png,jpeg}', {
+  eager: true
+}) as Record<string, { default: string }>
 
+let heroImages = Object.values(wallpaperModules).map((module) => module.default)
+
+if (heroImages.length === 0) {
+  heroImages = [wallpaperFallback]
+}
 
 export function HeroSection() {
   const [activeIndex, setActiveIndex] = useState(0)
 
   useEffect(() => {
+    if (heroImages.length === 0) {
+      return
+    }
+
     const interval = window.setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % heroImages.length)
     }, 6000)
@@ -18,8 +27,18 @@ export function HeroSection() {
     return () => window.clearInterval(interval)
   }, [])
 
+  const hasWallpapers = heroImages.length > 0
+
+  const heroSectionStyle: CSSProperties | undefined = hasWallpapers
+    ? {
+        backgroundImage: `url("${heroImages[activeIndex]}")`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }
+    : undefined
+
   return (
-    <section className="layout-section hero-section">
+    <section className="layout-section hero-section" style={heroSectionStyle}>
       <div className="hero-inner">
         <div className="hero-text">
           <div className="hero-tag">Three-year strategic partnership</div>
@@ -39,15 +58,6 @@ export function HeroSection() {
         </div>
         <div className="hero-visual">
           <div className="hero-panel hero-panorama">
-            {heroImages.map((src, index) => (
-              <div
-                key={src}
-                className={`hero-panorama-slide${
-                  index === activeIndex ? ' hero-panorama-slide-active' : ''
-                }`}
-                style={{ backgroundImage: `url("${src}")` }}
-              />
-            ))}
             <div className="hero-panorama-overlay">
               <div className="hero-panel-title">IEEE / ODC global initiatives</div>
               <div className="hero-panel-footer">
