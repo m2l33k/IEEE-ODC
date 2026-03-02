@@ -1497,12 +1497,12 @@ input[type='date'].vcf-input::-webkit-calendar-picker-indicator {
   grid-template-columns: 240px minmax(0, 1fr);
   min-height: 100vh;
   background: #070d1f;
-  transition: grid-template-columns 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: grid-template-columns 280ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Collapsed: icon-only sidebar */
-.adm-layout--collapsed {
-  grid-template-columns: 64px minmax(0, 1fr);
+/* Sidebar fully gone — column collapses to 0 */
+.adm-layout--hidden {
+  grid-template-columns: 0 minmax(0, 1fr);
 }
 
 /* ── Sidebar ── */
@@ -1517,8 +1517,19 @@ input[type='date'].vcf-input::-webkit-calendar-picker-indicator {
   top: 0;
   height: 100vh;
   overflow: hidden;
-  overflow-y: auto;
-  transition: width 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  /* clips content when collapsing */
+  width: 240px;
+  /* explicit width so transition works */
+  transition: width 280ms cubic-bezier(0.4, 0, 0.2, 1),
+    padding 280ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 280ms ease;
+}
+
+/* Hidden: truly nothing visible */
+.adm-sidebar--hidden {
+  width: 0;
+  padding: 0;
+  border-right-color: transparent;
 }
 
 /* Brand — non-clickable block */
@@ -1622,21 +1633,7 @@ input[type='date'].vcf-input::-webkit-calendar-picker-indicator {
   text-decoration: none;
 }
 
-/* Collapsed nav — center icons */
-.adm-layout--collapsed .adm-nav-link {
-  padding: 10px;
-  justify-content: center;
-}
-
-.adm-layout--collapsed .adm-brand {
-  justify-content: center;
-  padding: 8px 0;
-}
-
-.adm-layout--collapsed .adm-sidebar-footer {
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-}
-
+/* Remove icon-only collapsed rules — sidebar is now fully hidden instead */
 .adm-nav-link--active {
   background: rgba(255, 121, 0, 0.15);
   color: var(--color-primary) !important;
@@ -1664,6 +1661,7 @@ input[type='date'].vcf-input::-webkit-calendar-picker-indicator {
   padding: 8px 12px;
   border-radius: var(--radius-md);
   transition: background 150ms ease, color 150ms ease;
+  white-space: nowrap;
 }
 
 .adm-back-link:hover {
@@ -1781,10 +1779,25 @@ input[type='date'].vcf-input::-webkit-calendar-picker-indicator {
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: background 150ms ease;
+  border: none;
+  background: transparent;
+  font-family: var(--font-sans);
 }
 
-.adm-topbar-user:hover {
-  background: rgba(255, 255, 255, 0.05);
+.adm-topbar-user:hover,
+.adm-topbar-user--open {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.adm-profile-chevron {
+  color: rgba(148, 163, 184, 0.5);
+  transition: transform 200ms ease;
+  margin-left: 2px;
+  flex-shrink: 0;
+}
+
+.adm-topbar-user--open .adm-profile-chevron {
+  transform: rotate(180deg);
 }
 
 .adm-topbar-avatar {
@@ -1820,6 +1833,130 @@ input[type='date'].vcf-input::-webkit-calendar-picker-indicator {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   line-height: 1;
+}
+
+/* ── Profile Dropdown ── */
+.adm-profile-wrap {
+  position: relative;
+}
+
+.adm-profile-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 260px;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #111827;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.65);
+  overflow: hidden;
+  z-index: 200;
+  animation: adm-profile-in 160ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes adm-profile-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Profile header with avatar */
+.adm-profile-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+}
+
+.adm-profile-avatar-lg {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-strong));
+  color: #0b0f1f;
+  font-size: 16px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(255, 121, 0, 0.35);
+}
+
+.adm-profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  overflow: hidden;
+}
+
+.adm-profile-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+
+.adm-profile-email {
+  font-size: 12px;
+  color: rgba(148, 163, 184, 0.6);
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.adm-profile-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  margin: 0;
+}
+
+.adm-profile-menu {
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.adm-profile-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: rgba(148, 163, 184, 0.85);
+  cursor: pointer;
+  transition: background 120ms ease, color 120ms ease;
+  text-decoration: none;
+  border: none;
+  background: none;
+  font-family: var(--font-sans);
+  width: 100%;
+  text-align: left;
+}
+
+.adm-profile-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  text-decoration: none;
+}
+
+.adm-profile-item--danger {
+  color: #f87171;
+}
+
+.adm-profile-item--danger:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: #fca5a5;
 }
 
 /* Content area */

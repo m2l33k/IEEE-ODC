@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
+import { NavLink, Outlet, Link, useLocation } from 'react-router-dom'
 
 type Theme = 'dark' | 'light'
 
@@ -24,13 +24,26 @@ const PAGE_TITLES: Record<string, string> = {
 export function AdminLayout() {
   const { pathname } = useLocation()
   const pageTitle = PAGE_TITLES[pathname] ?? 'Admin'
-  const [collapsed, setCollapsed] = useState(false)
+  const [sidebarOpen, setSidebar] = useState(true)
+  const [profileOpen, setProfile] = useState(false)
+  const profileRef = useRef<HTMLDivElement>(null)
   const [theme, setTheme] = useState<Theme>(() => {
     const stored = window.localStorage.getItem('ieee_odc_theme')
     return (stored === 'light' || stored === 'dark') ? stored : 'dark'
   })
   const [notifCount] = useState(3)
   const [msgCount] = useState(5)
+
+  /* Close profile dropdown when clicking outside */
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
+        setProfile(false)
+      }
+    }
+    if (profileOpen) document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }, [profileOpen])
 
   function toggleTheme() {
     const next: Theme = theme === 'dark' ? 'light' : 'dark'
@@ -40,35 +53,25 @@ export function AdminLayout() {
   }
 
   return (
-    <div className={`adm-layout${collapsed ? ' adm-layout--collapsed' : ''}`}>
+    <div className={`adm-layout${sidebarOpen ? '' : ' adm-layout--hidden'}`}>
 
       {/* ── Sidebar ── */}
-      <aside className="adm-sidebar">
+      <aside className={`adm-sidebar${sidebarOpen ? '' : ' adm-sidebar--hidden'}`} aria-hidden={!sidebarOpen}>
 
-        {/* Brand — no redirect, just a static block */}
+        {/* Brand — static, no link redirect */}
         <div className="adm-brand">
           <div className="adm-brand-logos">
-            <img
-              src="/OIP-1215431747.jpg"
-              alt="IEEE"
-              className="adm-brand-img"
-            />
+            <img src="/OIP-1215431747.jpg" alt="IEEE" className="adm-brand-img" />
             <span className="adm-brand-sep">×</span>
-            <img
-              src="/ODC-RGB-black-Orange-4057230769.png"
-              alt="ODC"
-              className="adm-brand-img adm-brand-img--odc"
-            />
+            <img src="/ODC-RGB-black-Orange-4057230769.png" alt="ODC" className="adm-brand-img adm-brand-img--odc" />
           </div>
-          {!collapsed && (
-            <div className="adm-brand-text">
-              <span className="adm-brand-label">IEEE / ODC</span>
-              <span className="adm-brand-sub">Admin Panel</span>
-            </div>
-          )}
+          <div className="adm-brand-text">
+            <span className="adm-brand-label">IEEE / ODC</span>
+            <span className="adm-brand-sub">Admin Panel</span>
+          </div>
         </div>
 
-        {!collapsed && <div className="adm-sidebar-section-label">Navigation</div>}
+        <div className="adm-sidebar-section-label">Navigation</div>
 
         <nav className="adm-nav" aria-label="Admin navigation">
           {NAV_ITEMS.map(({ to, label, end, icon }) => (
@@ -76,31 +79,24 @@ export function AdminLayout() {
               key={to}
               to={to}
               end={end}
-              title={collapsed ? label : undefined}
               className={({ isActive }) => `adm-nav-link${isActive ? ' adm-nav-link--active' : ''}`}
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
                 strokeLinecap="round" strokeLinejoin="round" width="18" height="18" aria-hidden>
                 <path d={icon} />
               </svg>
-              {!collapsed && <span>{label}</span>}
+              <span>{label}</span>
             </NavLink>
           ))}
         </nav>
 
         <div className="adm-sidebar-footer">
-          {!collapsed && (
-            <NavLink
-              to="/"
-              className="adm-back-link"
-              title="Public site"
-            >
-              <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
-                <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
-              </svg>
-              Back to site
-            </NavLink>
-          )}
+          <Link to="/" className="adm-back-link">
+            <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
+              <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
+            </svg>
+            Back to site
+          </Link>
         </div>
       </aside>
 
@@ -109,31 +105,23 @@ export function AdminLayout() {
 
         {/* Top bar */}
         <header className="adm-topbar">
+
           {/* Left: hamburger + title */}
           <div className="adm-topbar-left">
             <button
               type="button"
               id="adm-sidebar-toggle"
               className="adm-icon-btn"
-              onClick={() => setCollapsed(c => !c)}
+              onClick={() => setSidebar(v => !v)}
               aria-label="Toggle sidebar"
-              title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+              title={sidebarOpen ? 'Hide sidebar' : 'Show sidebar'}
             >
-              {collapsed ? (
-                /* open icon */
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="20" height="20">
-                  <line x1="3" y1="6" x2="21" y2="6" />
-                  <line x1="3" y1="12" x2="21" y2="12" />
-                  <line x1="3" y1="18" x2="21" y2="18" />
-                </svg>
-              ) : (
-                /* close/collapse icon */
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="20" height="20">
-                  <line x1="3" y1="6" x2="15" y2="6" />
-                  <line x1="3" y1="12" x2="21" y2="12" />
-                  <line x1="3" y1="18" x2="15" y2="18" />
-                </svg>
-              )}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+                strokeLinecap="round" strokeLinejoin="round" width="20" height="20">
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <line x1="3" y1="12" x2="21" y2="12" />
+                <line x1="3" y1="18" x2="21" y2="18" />
+              </svg>
             </button>
             <h1 className="adm-topbar-title">{pageTitle}</h1>
           </div>
@@ -141,11 +129,8 @@ export function AdminLayout() {
           {/* Right: icons + avatar */}
           <div className="adm-topbar-right">
 
-            {/* Theme toggle */}
-            <button
-              type="button"
-              id="adm-theme-toggle"
-              className="adm-icon-btn"
+            {/* Theme */}
+            <button type="button" id="adm-theme-toggle" className="adm-icon-btn"
               onClick={toggleTheme}
               aria-label="Toggle theme"
               title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
@@ -181,13 +166,80 @@ export function AdminLayout() {
             {/* Divider */}
             <div className="adm-topbar-divider" />
 
-            {/* Avatar */}
-            <div className="adm-topbar-user">
-              <div className="adm-topbar-avatar">A</div>
-              <div className="adm-topbar-user-info">
-                <span className="adm-topbar-user-name">Admin</span>
-                <span className="adm-topbar-user-role">Administrator</span>
-              </div>
+            {/* Profile trigger + dropdown */}
+            <div className="adm-profile-wrap" ref={profileRef}>
+              <button
+                type="button"
+                id="adm-profile-btn"
+                className={`adm-topbar-user${profileOpen ? ' adm-topbar-user--open' : ''}`}
+                onClick={() => setProfile(v => !v)}
+                aria-haspopup="true"
+                aria-expanded={profileOpen}
+              >
+                <div className="adm-topbar-avatar">A</div>
+                <div className="adm-topbar-user-info">
+                  <span className="adm-topbar-user-name">Admin</span>
+                  <span className="adm-topbar-user-role">Administrator</span>
+                </div>
+                <svg className="adm-profile-chevron" viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
+                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </button>
+
+              {/* Dropdown */}
+              {profileOpen && (
+                <div className="adm-profile-dropdown" role="menu">
+                  {/* Header */}
+                  <div className="adm-profile-header">
+                    <div className="adm-profile-avatar-lg">A</div>
+                    <div className="adm-profile-info">
+                      <div className="adm-profile-name">Administrator</div>
+                      <div className="adm-profile-email">admin@ieee-odc.org</div>
+                    </div>
+                  </div>
+
+                  <div className="adm-profile-divider" />
+
+                  {/* Menu items */}
+                  <div className="adm-profile-menu">
+                    <button type="button" className="adm-profile-item" role="menuitem">
+                      <svg viewBox="0 0 20 20" fill="currentColor" width="15" height="15">
+                        <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                      </svg>
+                      My Profile
+                    </button>
+                    <button type="button" className="adm-profile-item" role="menuitem">
+                      <svg viewBox="0 0 20 20" fill="currentColor" width="15" height="15">
+                        <path fillRule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
+                      </svg>
+                      Settings
+                    </button>
+                    <button type="button" className="adm-profile-item" role="menuitem">
+                      <svg viewBox="0 0 20 20" fill="currentColor" width="15" height="15">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+                      </svg>
+                      Help & Support
+                    </button>
+                  </div>
+
+                  <div className="adm-profile-divider" />
+
+                  <div className="adm-profile-menu">
+                    <Link to="/" className="adm-profile-item" role="menuitem" onClick={() => setProfile(false)}>
+                      <svg viewBox="0 0 20 20" fill="currentColor" width="15" height="15">
+                        <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
+                      </svg>
+                      Public Site
+                    </Link>
+                    <button type="button" className="adm-profile-item adm-profile-item--danger" role="menuitem">
+                      <svg viewBox="0 0 20 20" fill="currentColor" width="15" height="15">
+                        <path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd" />
+                      </svg>
+                      Sign Out
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
 
           </div>
