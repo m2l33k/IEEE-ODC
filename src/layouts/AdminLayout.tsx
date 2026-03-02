@@ -106,7 +106,7 @@ export function AdminLayout() {
         {/* Top bar */}
         <header className="adm-topbar">
 
-          {/* Left: hamburger + title */}
+          {/* Left: hamburger + search + title */}
           <div className="adm-topbar-left">
             <button
               type="button"
@@ -123,6 +123,20 @@ export function AdminLayout() {
                 <line x1="3" y1="18" x2="21" y2="18" />
               </svg>
             </button>
+
+            {/* Expandable search */}
+            <div className="adm-search-wrap">
+              <svg className="adm-search-icon" viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
+                <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+              </svg>
+              <input
+                type="text"
+                className="adm-search"
+                placeholder="Search…"
+                aria-label="Search admin panel"
+              />
+            </div>
+
             <h1 className="adm-topbar-title">{pageTitle}</h1>
           </div>
 
@@ -246,6 +260,16 @@ export function AdminLayout() {
         </header>
 
         <main className="adm-content">
+          {/* Breadcrumb */}
+          <nav className="adm-breadcrumb" aria-label="Breadcrumb">
+            <NavLink to="/admin" className="adm-breadcrumb-link" end>Home</NavLink>
+            {pathname !== '/admin' && (
+              <>
+                <span className="adm-breadcrumb-sep">›</span>
+                <span className="adm-breadcrumb-current">{pageTitle}</span>
+              </>
+            )}
+          </nav>
           <Outlet />
         </main>
       </div>

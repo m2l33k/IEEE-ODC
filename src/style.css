@@ -1959,6 +1959,609 @@ input[type='date'].vcf-input::-webkit-calendar-picker-indicator {
   color: #fca5a5;
 }
 
+/* ═══════════════════════════════════════════════════════
+   ADMIN LIGHT MODE OVERRIDES
+   (all adm-* hard-coded dark hex values flipped to light)
+═══════════════════════════════════════════════════════ */
+
+:root[data-theme='light'] .adm-layout {
+  background: #f1f5f9;
+}
+
+:root[data-theme='light'] .adm-sidebar {
+  background: #ffffff;
+  border-right-color: #e2e8f0;
+}
+
+:root[data-theme='light'] .adm-brand-label {
+  color: #0f172a;
+}
+
+:root[data-theme='light'] .adm-brand-sub {
+  color: #94a3b8;
+}
+
+:root[data-theme='light'] .adm-sidebar-section-label {
+  color: #94a3b8;
+}
+
+:root[data-theme='light'] .adm-nav-link {
+  color: #475569;
+}
+
+:root[data-theme='light'] .adm-nav-link:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+:root[data-theme='light'] .adm-nav-link--active {
+  background: rgba(255, 121, 0, 0.1);
+  color: #c95e00 !important;
+}
+
+:root[data-theme='light'] .adm-nav-link--active:hover {
+  background: rgba(255, 121, 0, 0.15);
+}
+
+:root[data-theme='light'] .adm-sidebar-footer {
+  border-top-color: #e2e8f0;
+}
+
+:root[data-theme='light'] .adm-back-link {
+  color: #64748b;
+}
+
+:root[data-theme='light'] .adm-back-link:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+/* Top bar */
+:root[data-theme='light'] .adm-topbar {
+  background: rgba(255, 255, 255, 0.92);
+  border-bottom-color: #e2e8f0;
+}
+
+:root[data-theme='light'] .adm-topbar-title {
+  color: #0f172a;
+}
+
+:root[data-theme='light'] .adm-icon-btn {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+:root[data-theme='light'] .adm-icon-btn:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+:root[data-theme='light'] .adm-topbar-divider {
+  background: #e2e8f0;
+}
+
+:root[data-theme='light'] .adm-topbar-user:hover,
+:root[data-theme='light'] .adm-topbar-user--open {
+  background: #f1f5f9;
+}
+
+:root[data-theme='light'] .adm-topbar-user-name {
+  color: #0f172a;
+}
+
+:root[data-theme='light'] .adm-topbar-user-role {
+  color: #94a3b8;
+}
+
+:root[data-theme='light'] .adm-profile-chevron {
+  color: #94a3b8;
+}
+
+:root[data-theme='light'] .adm-badge {
+  border-color: #f8fafc;
+}
+
+/* Profile dropdown */
+:root[data-theme='light'] .adm-profile-dropdown {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.15);
+}
+
+:root[data-theme='light'] .adm-profile-name {
+  color: #0f172a;
+}
+
+:root[data-theme='light'] .adm-profile-email {
+  color: #64748b;
+}
+
+:root[data-theme='light'] .adm-profile-divider {
+  background: #e2e8f0;
+}
+
+:root[data-theme='light'] .adm-profile-item {
+  color: #475569;
+}
+
+:root[data-theme='light'] .adm-profile-item:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+/* Main area */
+:root[data-theme='light'] .adm-main {
+  background: #f1f5f9;
+}
+
+/* Stat cards */
+:root[data-theme='light'] .adm-stat-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
+}
+
+:root[data-theme='light'] .adm-stat-card:hover {
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+}
+
+:root[data-theme='light'] .adm-stat-value {
+  color: #0f172a;
+}
+
+:root[data-theme='light'] .adm-stat-label {
+  color: #64748b;
+}
+
+/* Quick cards */
+:root[data-theme='light'] .adm-quick-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
+}
+
+:root[data-theme='light'] .adm-quick-card:hover {
+  background: #fff7ed;
+  border-color: #fb923c;
+}
+
+:root[data-theme='light'] .adm-quick-label {
+  color: #0f172a;
+}
+
+:root[data-theme='light'] .adm-quick-desc {
+  color: #64748b;
+}
+
+/* Info banner */
+:root[data-theme='light'] .adm-info-banner {
+  background: rgba(59, 130, 246, 0.05);
+  border-color: rgba(59, 130, 246, 0.25);
+  color: #475569;
+}
+
+/* Page intro */
+:root[data-theme='light'] .adm-page-intro {
+  color: #64748b;
+}
+
+:root[data-theme='light'] .adm-section-title {
+  color: #94a3b8;
+}
+
+/* Table */
+:root[data-theme='light'] .adm-table-wrap {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+:root[data-theme='light'] .adm-table thead th {
+  background: #f8fafc;
+  color: #94a3b8;
+  border-bottom-color: #e2e8f0;
+}
+
+:root[data-theme='light'] .adm-table tbody tr {
+  border-bottom-color: #f1f5f9;
+}
+
+:root[data-theme='light'] .adm-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+:root[data-theme='light'] .adm-table td {
+  color: #374151;
+}
+
+/* Empty state */
+:root[data-theme='light'] .adm-empty {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+:root[data-theme='light'] .adm-empty-icon {
+  background: #f1f5f9;
+  color: #94a3b8;
+}
+
+:root[data-theme='light'] .adm-empty-title {
+  color: #1e293b;
+}
+
+:root[data-theme='light'] .adm-empty-desc {
+  color: #64748b;
+}
+
+/* Gallery */
+:root[data-theme='light'] .adm-gallery-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+:root[data-theme='light'] .adm-gallery-card:hover {
+  border-color: #cbd5e1;
+}
+
+:root[data-theme='light'] .adm-gallery-title {
+  color: #0f172a;
+}
+
+:root[data-theme='light'] .adm-gallery-desc {
+  color: #64748b;
+}
+
+/* Modal */
+:root[data-theme='light'] .adm-backdrop {
+  background: rgba(15, 23, 42, 0.45);
+}
+
+:root[data-theme='light'] .adm-modal {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.18);
+}
+
+:root[data-theme='light'] .adm-modal-header {
+  border-bottom-color: #e2e8f0;
+}
+
+:root[data-theme='light'] .adm-modal-title {
+  color: #0f172a;
+}
+
+:root[data-theme='light'] .adm-modal-close {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+:root[data-theme='light'] .adm-modal-close:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+:root[data-theme='light'] .adm-modal-footer {
+  border-top-color: #e2e8f0;
+  background: #f8fafc;
+}
+
+:root[data-theme='light'] .adm-input {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+:root[data-theme='light'] .adm-input::placeholder {
+  color: #94a3b8;
+}
+
+:root[data-theme='light'] .adm-label {
+  color: #475569;
+}
+
+:root[data-theme='light'] .adm-checkbox-row {
+  color: #374151;
+}
+
+:root[data-theme='light'] .adm-status-btn {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+  color: #374151;
+}
+
+:root[data-theme='light'] .adm-status-btn:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+:root[data-theme='light'] .adm-btn-cancel {
+  border-color: #cbd5e1;
+  color: #475569;
+}
+
+:root[data-theme='light'] .adm-btn-cancel:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+:root[data-theme='light'] .adm-filter select {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #374151;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%2394a3b8'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'/%3E%3C/svg%3E");
+}
+
+:root[data-theme='light'] .adm-filter {
+  color: #475569;
+}
+
+/* Sidebar hidden border */
+:root[data-theme='light'] .adm-sidebar--hidden {
+  border-right-color: transparent;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ADMIN EXTRA FEATURES
+═══════════════════════════════════════════════════════ */
+
+/* ── Breadcrumb bar ── */
+.adm-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: rgba(148, 163, 184, 0.6);
+  margin-bottom: var(--space-md);
+  padding: 0 2px;
+}
+
+:root[data-theme='light'] .adm-breadcrumb {
+  color: #94a3b8;
+}
+
+.adm-breadcrumb-sep {
+  font-size: 10px;
+}
+
+.adm-breadcrumb-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 120ms ease;
+}
+
+.adm-breadcrumb-link:hover {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.adm-breadcrumb-current {
+  color: rgba(200, 210, 230, 0.9);
+  font-weight: 600;
+}
+
+:root[data-theme='light'] .adm-breadcrumb-current {
+  color: #1e293b;
+}
+
+/* ── Topbar search box ── */
+.adm-search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.adm-search-icon {
+  position: absolute;
+  left: 10px;
+  color: rgba(148, 163, 184, 0.5);
+  pointer-events: none;
+}
+
+:root[data-theme='light'] .adm-search-icon {
+  color: #94a3b8;
+}
+
+.adm-search {
+  width: 200px;
+  padding: 7px 12px 7px 32px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  outline: none;
+  transition: width 250ms ease, border-color 150ms ease, background 150ms ease;
+}
+
+.adm-search::placeholder {
+  color: rgba(148, 163, 184, 0.45);
+}
+
+.adm-search:focus {
+  width: 260px;
+  border-color: var(--color-primary);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+:root[data-theme='light'] .adm-search {
+  border-color: #e2e8f0;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+:root[data-theme='light'] .adm-search::placeholder {
+  color: #94a3b8;
+}
+
+:root[data-theme='light'] .adm-search:focus {
+  background: #fff;
+  border-color: var(--color-primary);
+}
+
+/* ── Toast notification ── */
+.adm-toast-container {
+  position: fixed;
+  bottom: var(--space-xl);
+  right: var(--space-xl);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  pointer-events: none;
+}
+
+.adm-toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  color: #e2e8f0;
+  font-size: 13.5px;
+  font-weight: 500;
+  min-width: 280px;
+  pointer-events: auto;
+  animation: adm-toast-in 250ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root[data-theme='light'] .adm-toast {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  color: #1e293b;
+  box-shadow: 0 8px 32px rgba(15, 23, 42, 0.15);
+}
+
+@keyframes adm-toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.adm-toast-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 11px;
+}
+
+.adm-toast-icon--success {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+}
+
+.adm-toast-icon--error {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+}
+
+.adm-toast-icon--info {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+}
+
+/* ── Activity feed item ── */
+.adm-activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.adm-activity-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  transition: background 120ms ease;
+}
+
+.adm-activity-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+:root[data-theme='light'] .adm-activity-item:hover {
+  background: #f8fafc;
+}
+
+.adm-activity-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  flex-shrink: 0;
+  box-shadow: 0 0 6px currentColor;
+}
+
+.adm-activity-text {
+  flex: 1;
+  font-size: 13px;
+  color: rgba(200, 210, 230, 0.9);
+}
+
+:root[data-theme='light'] .adm-activity-text {
+  color: #374151;
+}
+
+.adm-activity-time {
+  font-size: 11px;
+  color: rgba(148, 163, 184, 0.5);
+  white-space: nowrap;
+}
+
+:root[data-theme='light'] .adm-activity-time {
+  color: #94a3b8;
+}
+
+/* ── Progress bar (used in stat cards or module rows) ── */
+.adm-progress-wrap {
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+:root[data-theme='light'] .adm-progress-wrap {
+  background: #e2e8f0;
+}
+
+.adm-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Pill tag (used in table cells) ── */
+.adm-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(148, 163, 184, 0.1);
+  color: rgba(148, 163, 184, 0.8);
+  white-space: nowrap;
+}
+
+:root[data-theme='light'] .adm-tag {
+  background: #f1f5f9;
+  color: #475569;
+}
+
 /* Content area */
 .adm-content {
   flex: 1;
