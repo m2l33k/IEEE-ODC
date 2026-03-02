@@ -3,6 +3,7 @@ import { PublicLayout } from './layouts/PublicLayout'
 import { LandingPage } from './pages/LandingPage'
 import { VoucherClaimPage } from './pages/VoucherClaimPage'
 import { VoucherStatusPage } from './pages/VoucherStatusPage'
+import { CataloguePage } from './pages/CataloguePage'
 import { AdminLayout } from './layouts/AdminLayout'
 import { AdminDashboard } from './pages/admin/AdminDashboard'
 import { AdminTeamsPage } from './pages/admin/AdminTeamsPage'
@@ -19,6 +20,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/vouchers/claim" element={<VoucherClaimPage />} />
           <Route path="/vouchers/status" element={<VoucherStatusPage />} />
+          <Route path="/catalogue" element={<CataloguePage />} />
         </Route>
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />

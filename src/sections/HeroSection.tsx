@@ -39,8 +39,8 @@ export function HeroSection() {
 
   return (
     <section className="layout-section hero-section" style={heroSectionStyle}>
-      <div className="hero-inner">
-        <div className="hero-text">
+      <div className="hero-inner hero-inner--centered">
+        <div className="hero-text hero-text--full">
           <div className="hero-tag">Three-year strategic partnership</div>
           <h1>Bridging Innovation &amp; Connectivity</h1>
           <p className="hero-subtitle">
@@ -54,16 +54,6 @@ export function HeroSection() {
             <Link to="/vouchers/claim" className="btn btn-secondary">
               Claim voucher
             </Link>
-          </div>
-        </div>
-        <div className="hero-visual">
-          <div className="hero-panel hero-panorama">
-            <div className="hero-panorama-overlay">
-              <div className="hero-panel-title">IEEE / ODC global initiatives</div>
-              <div className="hero-panel-footer">
-                Rotating view of partnership activities, communities, and opportunities.
-              </div>
-            </div>
           </div>
         </div>
       </div>

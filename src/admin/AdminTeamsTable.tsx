@@ -1,122 +1,69 @@
 import { useState } from 'react'
 
-type TeamMember = {
-  id: string
-  name: string
-  role: string
-  group?: string
-  visible: boolean
-}
-
+type TeamMember = { id: string; name: string; role: string; group?: string; visible: boolean }
 type DialogMode = 'add' | 'edit'
 
 export function AdminTeamsTable() {
   const [members, setMembers] = useState<TeamMember[]>([])
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [dialogMode, setDialogMode] = useState<DialogMode>('add')
-  const [editingId, setEditingId] = useState<string | null>(null)
-  const [draft, setDraft] = useState<Omit<TeamMember, 'id'>>({
-    name: '',
-    role: '',
-    group: '',
-    visible: true
-  })
+  const [open, setOpen] = useState(false)
+  const [mode, setMode] = useState<DialogMode>('add')
+  const [editId, setEditId] = useState<string | null>(null)
+  const [draft, setDraft] = useState<Omit<TeamMember, 'id'>>({ name: '', role: '', group: '', visible: true })
   const [errors, setErrors] = useState<Record<string, string>>({})
 
-  function openAddDialog() {
-    setDialogMode('add')
-    setEditingId(null)
-    setDraft({ name: '', role: '', group: '', visible: true })
-    setErrors({})
-    setIsDialogOpen(true)
-  }
-
-  function openEditDialog(member: TeamMember) {
-    setDialogMode('edit')
-    setEditingId(member.id)
-    setDraft({
-      name: member.name,
-      role: member.role,
-      group: member.group,
-      visible: member.visible
-    })
-    setErrors({})
-    setIsDialogOpen(true)
-  }
+  function openAdd() { setMode('add'); setEditId(null); setDraft({ name: '', role: '', group: '', visible: true }); setErrors({}); setOpen(true) }
+  function openEdit(m: TeamMember) { setMode('edit'); setEditId(m.id); setDraft({ name: m.name, role: m.role, group: m.group, visible: m.visible }); setErrors({}); setOpen(true) }
+  function close() { setOpen(false) }
 
   function validate() {
-    const nextErrors: Record<string, string> = {}
-    if (!draft.name.trim()) nextErrors.name = 'Name is required.'
-    if (!draft.role.trim()) nextErrors.role = 'Role is required.'
-    setErrors(nextErrors)
-    return Object.keys(nextErrors).length === 0
+    const e: Record<string, string> = {}
+    if (!draft.name.trim()) e.name = 'Name is required.'
+    if (!draft.role.trim()) e.role = 'Role is required.'
+    setErrors(e); return !Object.keys(e).length
   }
 
-  function saveMember() {
+  function save() {
     if (!validate()) return
-
-    if (dialogMode === 'add') {
-      const id = 'member-' + (members.length + 1).toString().padStart(2, '0')
-      setMembers((list) => [...list, { id, ...draft }])
-    } else if (editingId) {
-      setMembers((list) => list.map((m) => (m.id === editingId ? { ...m, ...draft } : m)))
+    if (mode === 'add') {
+      setMembers(l => [...l, { id: 'member-' + (l.length + 1).toString().padStart(2, '0'), ...draft }])
+    } else if (editId) {
+      setMembers(l => l.map(m => m.id === editId ? { ...m, ...draft } : m))
     }
-
-    setIsDialogOpen(false)
+    close()
   }
 
-  function deleteMember(id: string) {
-    setMembers((list) => list.filter((m) => m.id !== id))
-  }
+  function del(id: string) { setMembers(l => l.filter(m => m.id !== id)) }
 
   return (
-    <div className="admin-module">
-      <div className="admin-toolbar">
-        <button type="button" className="btn btn-primary" onClick={openAddDialog}>
-          Add team member
-        </button>
+    <div>
+      <div className="adm-toolbar">
+        <div />
+        <button type="button" className="btn btn-primary" onClick={openAdd}>+ Add member</button>
       </div>
+
       {members.length === 0 ? (
-        <div className="empty-state">
-          <div className="empty-title">No team members</div>
-          <div className="empty-description">
-            Create team entries to display contacts on the public site.
+        <div className="adm-empty">
+          <div className="adm-empty-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="24" height="24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
           </div>
+          <div className="adm-empty-title">No team members yet</div>
+          <div className="adm-empty-desc">Create team entries to display contacts on the public site.</div>
         </div>
       ) : (
-        <div className="admin-table-wrapper">
-          <table className="admin-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Group</th>
-                <th>Visible</th>
-                <th />
-              </tr>
-            </thead>
+        <div className="adm-table-wrap">
+          <table className="adm-table">
+            <thead><tr><th>Name</th><th>Role</th><th>Group</th><th>Visible</th><th /></tr></thead>
             <tbody>
-              {members.map((member) => (
-                <tr key={member.id}>
-                  <td>{member.name}</td>
-                  <td>{member.role}</td>
-                  <td>{member.group}</td>
-                  <td>{member.visible ? 'Yes' : 'No'}</td>
-                  <td className="admin-table-actions">
-                    <button
-                      type="button"
-                      className="btn btn-ghost"
-                      onClick={() => openEditDialog(member)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      type="button"
-                      className="btn btn-ghost"
-                      onClick={() => deleteMember(member.id)}
-                    >
-                      Delete
-                    </button>
+              {members.map(m => (
+                <tr key={m.id}>
+                  <td style={{ fontWeight: 600, color: '#fff' }}>{m.name}</td>
+                  <td>{m.role}</td>
+                  <td>{m.group || '—'}</td>
+                  <td>{m.visible ? <span className="adm-badge-yes">Yes</span> : <span className="adm-badge-no">No</span>}</td>
+                  <td className="adm-td-actions">
+                    <button type="button" className="adm-btn-edit" onClick={() => openEdit(m)}>Edit</button>
+                    {' '}
+                    <button type="button" className="adm-btn-delete" onClick={() => del(m.id)}>Delete</button>
                   </td>
                 </tr>
               ))}
@@ -125,77 +72,38 @@ export function AdminTeamsTable() {
         </div>
       )}
 
-      {isDialogOpen && (
-        <div className="modal-backdrop" role="dialog" aria-modal="true">
-          <div className="modal">
-            <div className="modal-header">
-              <h2>{dialogMode === 'add' ? 'Add team member' : 'Edit team member'}</h2>
-              <button
-                type="button"
-                className="btn btn-ghost modal-close"
-                onClick={() => setIsDialogOpen(false)}
-              >
-                Close
+      {open && (
+        <div className="adm-backdrop" role="dialog" aria-modal="true" onClick={(e) => { if (e.target === e.currentTarget) close() }}>
+          <div className="adm-modal">
+            <div className="adm-modal-header">
+              <h2 className="adm-modal-title">{mode === 'add' ? 'Add Team Member' : 'Edit Team Member'}</h2>
+              <button type="button" className="adm-modal-close" onClick={close} aria-label="Close">
+                <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
               </button>
             </div>
-            <div className="modal-body">
-              <div className="form-field">
-                <label htmlFor="member-name">
-                  Name <span className="field-required">*</span>
-                </label>
-                <input
-                  id="member-name"
-                  type="text"
-                  value={draft.name}
-                  onChange={(e) => setDraft((prev) => ({ ...prev, name: e.target.value }))}
-                  aria-invalid={Boolean(errors.name)}
-                />
-                {errors.name && <div className="field-error">{errors.name}</div>}
+            <div className="adm-modal-body">
+              <div className="adm-field">
+                <label className="adm-label" htmlFor="m-name">Name <span className="adm-required">*</span></label>
+                <input id="m-name" type="text" className={`adm-input${errors.name ? ' adm-input--error' : ''}`} placeholder="Full name" value={draft.name} onChange={e => setDraft(p => ({ ...p, name: e.target.value }))} />
+                {errors.name && <span className="adm-field-error">{errors.name}</span>}
               </div>
-              <div className="form-field">
-                <label htmlFor="member-role">
-                  Role <span className="field-required">*</span>
-                </label>
-                <input
-                  id="member-role"
-                  type="text"
-                  value={draft.role}
-                  onChange={(e) => setDraft((prev) => ({ ...prev, role: e.target.value }))}
-                  aria-invalid={Boolean(errors.role)}
-                />
-                {errors.role && <div className="field-error">{errors.role}</div>}
+              <div className="adm-field">
+                <label className="adm-label" htmlFor="m-role">Role <span className="adm-required">*</span></label>
+                <input id="m-role" type="text" className={`adm-input${errors.role ? ' adm-input--error' : ''}`} placeholder="Job title / role" value={draft.role} onChange={e => setDraft(p => ({ ...p, role: e.target.value }))} />
+                {errors.role && <span className="adm-field-error">{errors.role}</span>}
               </div>
-              <div className="form-field">
-                <label htmlFor="member-group">Group</label>
-                <input
-                  id="member-group"
-                  type="text"
-                  value={draft.group ?? ''}
-                  onChange={(e) => setDraft((prev) => ({ ...prev, group: e.target.value }))}
-                />
+              <div className="adm-field">
+                <label className="adm-label" htmlFor="m-group">Group</label>
+                <input id="m-group" type="text" className="adm-input" placeholder="IEEE or ODC" value={draft.group ?? ''} onChange={e => setDraft(p => ({ ...p, group: e.target.value }))} />
               </div>
-              <div className="form-field">
-                <label className="checkbox-label">
-                  <input
-                    type="checkbox"
-                    checked={draft.visible}
-                    onChange={(e) => setDraft((prev) => ({ ...prev, visible: e.target.checked }))}
-                  />
-                  Visible on public site
-                </label>
-              </div>
+              <label className="adm-checkbox-row">
+                <input type="checkbox" checked={draft.visible} onChange={e => setDraft(p => ({ ...p, visible: e.target.checked }))} />
+                Visible on public site
+              </label>
             </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                onClick={() => setIsDialogOpen(false)}
-              >
-                Cancel
-              </button>
-              <button type="button" className="btn btn-primary" onClick={saveMember}>
-                Save
-              </button>
+            <div className="adm-modal-footer">
+              <button type="button" className="adm-btn-cancel" onClick={close}>Cancel</button>
+              <button type="button" className="adm-btn-save" onClick={save}>Save member</button>
             </div>
           </div>
         </div>
@@ -203,4 +111,3 @@ export function AdminTeamsTable() {
     </div>
   )
 }
-
