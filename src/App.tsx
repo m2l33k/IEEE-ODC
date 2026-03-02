@@ -4,6 +4,7 @@ import { LandingPage } from './pages/LandingPage'
 import { VoucherClaimPage } from './pages/VoucherClaimPage'
 import { VoucherStatusPage } from './pages/VoucherStatusPage'
 import { CataloguePage } from './pages/CataloguePage'
+import { NotFoundPage } from './pages/NotFoundPage'
 import { AdminLayout } from './layouts/AdminLayout'
 import { AdminDashboard } from './pages/admin/AdminDashboard'
 import { AdminTeamsPage } from './pages/admin/AdminTeamsPage'
@@ -21,6 +22,8 @@ function App() {
           <Route path="/vouchers/claim" element={<VoucherClaimPage />} />
           <Route path="/vouchers/status" element={<VoucherStatusPage />} />
           <Route path="/catalogue" element={<CataloguePage />} />
+          {/* 404 catch-all */}
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />
@@ -36,4 +39,3 @@ function App() {
 }
 
 export default App
-
