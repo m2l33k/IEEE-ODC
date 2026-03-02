@@ -279,7 +279,7 @@ export function CataloguePage() {
             {/* Page header */}
             <div className="catalogue-hero">
                 <div className="catalogue-hero-inner">
-                    <div className="catalogue-badge">Orange Developer Center · 2026</div>
+                    <div className="catalogue-badge">Orange Digital Center · 2026</div>
                     <h1 className="catalogue-title">Training Catalogue</h1>
                     <p className="catalogue-subtitle">
                         {FORMATIONS.length} training programs across{' '}
