@@ -1,42 +1,175 @@
-const EVENTS = [
-  { id: 'e1', title: 'IEEE IEEE TSYP — Technical Congress', year: '2024', type: 'Conference', color: '#ff7900' },
-  { id: 'e2', title: 'National Hackathon — Innovation Sprint', year: '2024', type: 'Hackathon', color: '#6c2bd9' },
-  { id: 'e3', title: 'Student Branch Leadership Summit', year: '2023', type: 'Workshop', color: '#10b981' },
-  { id: 'e4', title: 'Women in Engineering Regional Day', year: '2023', type: 'Community', color: '#3b82f6' },
-  { id: 'e5', title: 'IEEE Day Tunisia — Tech & Impact Fair', year: '2023', type: 'Community', color: '#f59e0b' },
-  { id: 'e6', title: 'Mobile Development Intensive Bootcamp', year: '2024', type: 'Workshop', color: '#ef4444' },
-]
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import '../gallery.css';
+import rawGalleryData from '../../cloudinary_urls.json';
+
+// Define types based on JSON structure
+type CloudinaryImage = {
+  image_name: string;
+  url: string;
+};
+
+type GalleryData = {
+  [eventName: string]: CloudinaryImage[];
+};
+
+const galleryData: GalleryData = rawGalleryData;
 
 export function GallerySection() {
-  return (
-    <section id="gallery" className="pub-section pub-gallery">
-      <div className="pub-container">
-        <div className="pub-section-label">Events</div>
-        <h2 className="pub-section-title">Events & Gallery</h2>
-        <p className="pub-section-sub">
-          A visual record of workshops, conferences, hackathons and community initiatives supported under the partnership.
-        </p>
+  const [selectedEvent, setSelectedEvent] = useState<string | null>(null);
+  const [previewImageIndex, setPreviewImageIndex] = useState<number | null>(null);
 
-        <div className="pub-gallery-grid">
-          {EVENTS.map((ev) => (
-            <article key={ev.id} className="pub-gallery-card" style={{ '--g-color': ev.color } as React.CSSProperties}>
-              {/* Gradient placeholder thumb */}
-              <div className="pub-gallery-thumb" style={{ background: `linear-gradient(135deg, ${ev.color}22, ${ev.color}08)` }}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="36" height="36" style={{ color: `${ev.color}55` }}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <div className="pub-gallery-meta">
-                <div className="pub-gallery-top">
-                  <span className="pub-gallery-type" style={{ background: `${ev.color}18`, color: ev.color }}>{ev.type}</span>
-                  <span className="pub-gallery-year">{ev.year}</span>
+  // Filter out events with no images and format them, slicing to only show 3 for the preview.
+  const validEvents = Object.entries(galleryData)
+    .filter(([_, images]) => images.length > 0)
+    .map(([eventName, images]) => ({
+      name: eventName,
+      images,
+      cover: images[0].url,
+      count: images.length,
+    })).slice(0, 3);
+
+  // Handle body scrolling when modal is open
+  useEffect(() => {
+    if (selectedEvent || previewImageIndex !== null) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [selectedEvent, previewImageIndex]);
+
+  // Selected event data
+  const currentEventData = validEvents.find((e) => e.name === selectedEvent);
+  const currentImages = currentEventData?.images || [];
+
+  const handleNext = () => {
+    if (previewImageIndex !== null && previewImageIndex < currentImages.length - 1) {
+      setPreviewImageIndex(previewImageIndex + 1);
+    }
+  };
+
+  const handlePrev = () => {
+    if (previewImageIndex !== null && previewImageIndex > 0) {
+      setPreviewImageIndex(previewImageIndex - 1);
+    }
+  };
+
+  return (
+    <section id="gallery" className="premium-gallery-section">
+      <div className="premium-gallery-bg-glow"></div>
+
+      <div className="premium-gallery-container">
+        <div className="premium-header">
+          <span className="premium-subtitle">Memories & Highlights</span>
+          <h2 className="premium-title">Event Gallery</h2>
+          <p className="premium-desc">
+            Explore the vibrant moments from our previously hosted workshops, hackathons, and training sessions supported by the partnership.
+          </p>
+        </div>
+
+        <div className="premium-events-grid">
+          {validEvents.map((ev) => (
+            <article
+              key={ev.name}
+              className="premium-event-card"
+              onClick={() => setSelectedEvent(ev.name)}
+            >
+              <img src={ev.cover} alt={ev.name} className="premium-event-cover" loading="lazy" />
+              <div className="premium-event-overlay">
+                <div className="premium-event-badge">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                    <circle cx="8.5" cy="8.5" r="1.5" />
+                    <polyline points="21 15 16 10 5 21" />
+                  </svg>
+                  {ev.count} Photos
                 </div>
-                <h3 className="pub-gallery-title">{ev.title}</h3>
+                <h3 className="premium-event-name">{ev.name}</h3>
               </div>
             </article>
           ))}
         </div>
+
+        <div style={{ textAlign: "center", marginTop: "4rem" }}>
+          <Link to="/gallery" className="btn btn-primary" style={{ padding: "1rem 2.5rem", fontSize: "1.125rem", borderRadius: "999px", background: "#ff7900", border: "none", color: "#fff", fontWeight: "600", boxShadow: "0 10px 25px rgba(255,121,0,0.3)", transition: "all 0.3s ease" }}>
+            Check out full gallery →
+          </Link>
+        </div>
       </div>
-    </section>
-  )
+
+      {/* Main Lightbox Modal */}
+      <div className={`premium-modal-backdrop ${selectedEvent ? 'is-open' : ''}`}>
+        <div className="premium-modal-content">
+          <div className="premium-modal-header">
+            <h3 className="premium-modal-title">{selectedEvent}</h3>
+            <button
+              className="premium-modal-close"
+              onClick={() => { setSelectedEvent(null); setPreviewImageIndex(null); }}
+              aria-label="Close modal"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+          <div className="premium-modal-body">
+            <div className="premium-lightbox-grid">
+              {currentImages.map((img, idx) => (
+                <div
+                  key={idx}
+                  className="premium-lightbox-item"
+                  onClick={() => setPreviewImageIndex(idx)}
+                >
+                  <img src={img.url} alt={`Gallery ${idx + 1}`} loading="lazy" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Fullscreen Preview inside Modal */}
+          <div className={`premium-preview-overlay ${previewImageIndex !== null ? 'is-active' : ''}`}>
+            <div className="premium-preview-header">
+              <button
+                className="premium-modal-close"
+                onClick={() => setPreviewImageIndex(null)}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+            {previewImageIndex !== null && previewImageIndex > 0 && (
+              <button className="premium-nav-btn premium-nav-prev" onClick={handlePrev}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+            )}
+
+            {previewImageIndex !== null && (
+              <img
+                key={previewImageIndex}
+                src={currentImages[previewImageIndex].url}
+                className="premium-preview-img"
+                alt="Preview"
+              />
+            )}
+
+            {previewImageIndex !== null && previewImageIndex < currentImages.length - 1 && (
+              <button className="premium-nav-btn premium-nav-next" onClick={handleNext}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    </section >
+  );
 }

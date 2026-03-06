@@ -5,6 +5,7 @@ import { VoucherClaimPage } from './pages/VoucherClaimPage'
 import { VoucherStatusPage } from './pages/VoucherStatusPage'
 import { CataloguePage } from './pages/CataloguePage'
 import { NotFoundPage } from './pages/NotFoundPage'
+import { GalleryPage } from './pages/GalleryPage'
 import { AdminLayout } from './layouts/AdminLayout'
 import { AdminDashboard } from './pages/admin/AdminDashboard'
 import { AdminTeamsPage } from './pages/admin/AdminTeamsPage'
@@ -22,6 +23,7 @@ function App() {
           <Route path="/vouchers/claim" element={<VoucherClaimPage />} />
           <Route path="/vouchers/status" element={<VoucherStatusPage />} />
           <Route path="/catalogue" element={<CataloguePage />} />
+          <Route path="/gallery" element={<GalleryPage />} />
           {/* 404 catch-all */}
           <Route path="*" element={<NotFoundPage />} />
         </Route>
