@@ -100,6 +100,13 @@ export function AdminLayout() {
         </div>
       </aside>
 
+      {/* ── Mobile sidebar overlay ── */}
+      <div
+        className={`adm-sidebar-overlay${sidebarOpen ? ' adm-sidebar-overlay--visible' : ''}`}
+        onClick={() => setSidebar(false)}
+        aria-hidden
+      />
+
       {/* ── Main ── */}
       <div className="adm-main">
 

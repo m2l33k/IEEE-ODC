@@ -8,7 +8,7 @@ import { TimelineSection } from '../sections/TimelineSection'
 import { FaqSection } from '../sections/FaqSection'
 import { TeamsSection } from '../sections/TeamsSection'
 import { NewsletterSection } from '../sections/NewsletterSection'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 const logoModules = import.meta.glob('/src/assets/logo/*.{jpg,jpeg,png,svg}', {
   eager: true, query: '?url', import: 'default',
@@ -107,6 +107,21 @@ function SiteFooter() {
   )
 }
 
+/* ── Section reveal on scroll ── */
+function RevealSection({ children }: { children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const el = ref.current; if (!el) return
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { el.classList.add('pub-reveal--visible'); obs.unobserve(el) } },
+      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+    )
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [])
+  return <div ref={ref} className="pub-reveal">{children}</div>
+}
+
 export function LandingPage() {
   useEffect(() => {
     document.title = 'IEEE / Orange Digital Center — Strategic Partnership'
@@ -118,15 +133,15 @@ export function LandingPage() {
     <>
       <HeroSection />
       <FeaturedTrainingBanner />
-      <KpiSection />
-      <PartnershipOverviewSection />
-      <TimelineSection />
-      <GallerySection />
-      <SupportProcessSection />
-      <TestimonialsSection />
-      <FaqSection />
-      <TeamsSection />
-      <NewsletterSection />
+      <RevealSection><KpiSection /></RevealSection>
+      <RevealSection><PartnershipOverviewSection /></RevealSection>
+      <RevealSection><TimelineSection /></RevealSection>
+      <RevealSection><GallerySection /></RevealSection>
+      <RevealSection><SupportProcessSection /></RevealSection>
+      <RevealSection><TestimonialsSection /></RevealSection>
+      <RevealSection><FaqSection /></RevealSection>
+      <RevealSection><TeamsSection /></RevealSection>
+      <RevealSection><NewsletterSection /></RevealSection>
       <LogoStrip />
       <SiteFooter />
     </>
